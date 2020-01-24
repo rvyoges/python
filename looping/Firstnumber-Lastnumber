@@ -1,0 +1,8 @@
+#Write a program to find first and last digit of a number
+num=int(input())
+firstnumber=num%10
+while(num//10!=0):
+  num=num//10
+lastnumber=num
+print(lastnumber)
+print(firstnumber)
