@@ -1,0 +1,146 @@
+def register(userid):
+  name=input("Enter your name: ")
+  email=input("Enter your email id: ")
+  email=validate_email(email)
+  password=input("Enter your password: ")
+  mobile_no=input("Enter your mobile_no: ")
+  bank_bal=int(input("Enter your bank balance: "))
+  dict[userid]=[name,email,password,mobile_no,bank_bal]
+  return(dict)
+ 
+def validate_email(email):
+  mailid=email.endswith('@gmail.com')
+  while (mailid!=True):
+    email=input("Enter vaild email id: ")
+    mailid=email.endswith('@gmail.com')
+  else :return(email) 
+
+def randomnumber():
+    for i in range(0,len(list)):
+      userid=(random.randint(100,999))
+      if userid!=list[i]:
+        list.append(userid)
+        return userid
+        break
+      else:continue
+
+def retrieve_database():
+  count = 0
+  keys,values=[],[]
+  with open('database.txt', 'r') as b:
+    for line in b:
+        count += 1
+  b=open('database.txt','r')
+  if(b.mode=='r'):
+    for x in range (0,count):
+      key=eval(b.readline()).keys()
+      key=str(key)
+      k1.append(key)
+    for x in range (0,count):
+      ans=k1[x]
+      ans=ans.replace('dict_keys([',' ')
+      ans=ans.replace('])','')
+      k2.append(int(ans))
+  b.close()
+  print(k2)
+  c=open('database.txt','r')
+  if(c.mode=='r'):
+    for x in range (0,count):
+      value=c.readline()
+      value=(eval(value))
+      v1.append(value)
+    for y in range (0,count):
+      xx=(v1[y].values())
+      xx=str(xx)
+      xx=xx.replace('dict_values([','')
+      xx=xx.replace('])','')
+      xx=eval(xx)
+      v2.append(xx[2])
+      b1.append(xx[4])
+
+def user_credentials():
+  Unique_no=int(input("Enter your Unique number: "))
+  if Unique_no in k2:
+    index_value=(k2.index(Unique_no)) 
+    pwd=input("Enter your password: ")
+    bank_bal=b1[index_value]
+    if pwd==v2[index_value]:
+      print("You have successfully logged in")
+      return(bank_bal)
+    else:
+      print("You have entered wrong Password...Let's start again")
+      user_credentials()
+  else:
+    print("You have entered wrong Unique number...Let's start again")
+    user_credentials()
+
+def access():
+  print("Type 1 for View Bank Balance")
+  print("Type 2 for Transfer Funds")
+  print("Type 3 for Deposit Funds")
+  print("Type 4 for Exit")
+  choice=int(input("Your response: "))
+  return(choice)
+
+def transfer(bank_bal):
+  bank_bal=bank_bal
+  trf_amt=int(input("Enter the amount you want to transfer: "))
+  if bank_bal>(10000+trf_amt):
+    bank_bal=bank_bal-trf_amt
+    print("You have transfered Rs."+str(trf_amt) +" from your account")
+    return(bank_bal)
+  else:
+    print("You should maintain a minimum balance of Rs.10000 in your account.\nPls enter valid transfer amount.\nLet's try again")
+    transfer(bank_bal)
+
+def deposit(bank_bal):
+  bank_bal=bank_bal
+  dep_amt=int(input("Enter the amount you want to deposit: "))
+  if dep_amt<50000:
+    bank_bal=bank_bal+dep_amt
+    print("You have deposited Rs."+str(dep_amt) +" to your account")
+    return(bank_bal)
+  else:
+    print("You should deposit a maximum 0f 49,999.\nLet's try again")
+    deposit(bank_bal)
+  
+a=open("database.txt","a+")
+print("Type 1 for Register")
+print("Type 2 for Login")
+response=int(input())
+import random
+list=[111,627]
+dict={}
+value=[]
+emailid=' '
+k1,k2=[],[]
+v1,v2=[],[]
+b1,b2=[],[]
+
+if (response==1):
+  userid=randomnumber()
+  print("Your unique number generated - - -"+str(userid))
+  dict=str(register(userid))
+  a.write(str(dict))
+  a.write("\n")
+  print(dict)
+  print("Your have registered successfully")
+a.close()
+
+if (response==2):
+  retrieve_database()
+  bank_bal=user_credentials()
+  bank_bal=int(bank_bal)
+  choice=access()
+
+  if choice==1 :
+    print("Your bank balance : "+str(bank_bal))
+  
+  if choice==2 :
+    bank_bal=transfer(bank_bal)
+    
+  if choice==3 :
+    bank_bal=deposit(bank_bal)
+
+  if choice==4:
+    print("Thankyou")
